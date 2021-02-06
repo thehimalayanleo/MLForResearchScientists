@@ -1,0 +1,8 @@
+- name: Deploy to GitHub Pages
+  uses: Cecilapp/GitHub-Pages-deploy@v3
+  env:
+    GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+  with:
+    email: ajinkyamulay123@gmail.com
+    build_dir: _book  # optional
+    jekyll: no        # optional
