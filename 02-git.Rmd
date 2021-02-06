@@ -1,3 +1,0 @@
-# Git, Github and Desktop management {#git} 
-
-Here is a review of existing methods.

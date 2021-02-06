@@ -1,0 +1,14 @@
+fig:nice-fig
+tab:nice-tab
+preamble
+intro
+git
+setup
+importing-modeles-between-multiple-projects
+testing
+example-one
+example-two
+doc
+putting-it-all-together
+r-markdown
+including-plots
