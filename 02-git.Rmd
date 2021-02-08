@@ -1,3 +1,102 @@
 # Git, Github and Desktop management {#git} 
 
-Here is a review of existing methods.
+The standard way to use Git is via the terminal. Another approach is to use Github's official app at [Github Desktop](desktop.github.com). It supports most common OS distributions.
+
+## Using Git 
+
+Here are some standard methods for easy and error-free collaboration (for local files)
+**NOTE:** Adapted from [R for Research Scientists](https://nicole-brewer.com/r-for-research-scientists/git.html#merge-upstream-changes-into-your-own-master-branch)
+
+### Setting up a local repository from a remote one
+
+1. Initialize
+
+First fork the upstream repository. Next access your remote fork's url and clone it and set this remote url as the origin to push changes to. Finally, set the original repository (the one you cloned from) as your upstream.
+
+```{git localrepo1, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+# clone parent repo
+git clone your-remote-fork-url
+
+# set forked repo as origin
+git set remote-url origin your-remote-fork-url
+
+# set parent repo as upstream
+git remote add upstream your-remote-parent-url
+
+# list all remote repo
+git remote -v
+```
+2. Before starting to code
+
+Always, always and always fetch any changes from the upstream (parent) repository. Otherwise changes you make locally could create issues while merging (pushing your code upstream).
+
+```{git localrepo2, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+# get all changes from the parent repo
+git fetch upstream
+
+# switch to master branch and merge all changes
+git checkout master
+git merge upstream/master
+```
+
+3. Adding new features
+
+```{git localrepo3, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+# you want your new feature to use the master as the base
+git checkout master
+
+# create a new branch to work on a feature
+git branch new-feature
+
+# switch to the new-feature branch
+git checkout new-feature
+```
+
+4. Prevent tiny commits with amend
+
+Make sure your source code is also synced with a cloud service like dropbox or you are using Colab. This ensures you do not lose data due to *not saving* or due to power failures.
+
+```{git localrepo4, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+# make changes to code
+# commit
+git commit -m 'your message'
+# make few small changes
+# do not commit another message, just amend
+git commit --amend
+
+# accumulate until you have a large enough commit
+```
+
+5. Incorporate upstream changes before rebasing feature branch
+```{git localrepo5, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+# get all changes from the parent repo
+git fetch upstream
+
+# switch to master branch and merge all changes
+git checkout master
+git merge upstream/master
+
+# switch to new-feature branch
+git checkout new-feature
+
+# new-feature commits switched to top of the master branch
+git pull --rebase origin master
+```
+
+If you get stuck use the following link to troubleshoot further, [troubleshoot](https://happygitwithr.com/pull-tricky.html) or google to check it out on [stackoverflow](https://stackoverflow.com/)
+
+## Using GitHub and Google Colaboratory (Colab)
+
+## In-built option
+
+1. Create a repository on GitHub or decide to use an existing one
+2. Go to you Colab file
+3. Next, select *File->Save a copy in GitHub*
+4. Authorize your GitHub Account and select the appropriate repository, add the commit message and press OK!
+5. To use version control, make changes to your code and repeat steps (2)-(4) 
+
+## The Longer Option
+
+Colab provides the option to download your source code to your computer. You can go to *File->Download .ipynb* OR *File->Download .py* and store the notebook as a local notebook or convert to a python file. Next, you can use the local Git way to maintain version control. To access the file in Colab, you'll however have to reupload the file to Colab using the *File->Open Notebook* option in Colab.
+
+

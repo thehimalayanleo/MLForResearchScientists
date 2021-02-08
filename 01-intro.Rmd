@@ -1,21 +1,62 @@
-# Python and Google Colaboratory {#intro}
+# ML Setup {#setup}
 
-You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
+## Google Colaboratory (Colab)
 
-Figures and tables with captions will be placed in `figure` and `table` environments, respectively.
+The easiest way to get started with Machine Learning (for FREE!) is using [Google Colaboratory](colab.research.google.com). Let us look at the easiest out-of-the-box setup to get you started.
 
-```{r nice-fig, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
-par(mar = c(4, 4, .1, .1))
-plot(pressure, type = 'b', pch = 19)
+1. Link your Google Account to store notebooks.
+
+2. Setting up storage.
+* Adding files can easily be done by the Colab UI on the left pane of the notebook by clicking on the folder icon and clicking on the upload symbol. However, if your instance times out, which it easily can depending on your network, RAM usage, whether you are using Colab Pro or the Free version, you might prefer a solution which is more permanent. 
+
+* The permanent solution uses your Google Drive to host your files, especially larger datasets. There are ways to connect Colab to external data storage too like AWS. However, for most research purposes and smaller projects the Google Drive approach works well. You can check out other approaches at [data storage connection](https://towardsdatascience.com/importing-data-to-google-colab-the-clean-way-5ceef9e9e3c8#:~:text=Manual%20Method%201%20%E2%80%94%20using%20files.upload%20()%20to,from%20your%20computer%20into%20to%20the%20Colab%20environment). Let us now look at the Google Drive mounting method ([reference](https://enjoymachinelearning.com/posts/colab-with-google-drive/))
+
+```python
+from google.colab import drive
+drive.mount('/content/drive')
+
+# Access the URL after running the command above and get authorized
+
+# To avoid slowdowns, transfer data from google drive to colab notebook
+zip_path = '/content/drive/My Drive/Data/example-dataset.zip'
+
+!cp "{zip_path}" .
+
+!unzip -q example-dataset.zip
+
+# Remove .zip file after you unzip it
+!rm split-garbage-dataset.zip
+
+# Make sure it's there
+!ls
+
+```
+ Here, we mount the drive using the first two commands. Next to speed training we transfer the actual data to the Colab notebook from drive. Here we have first stored our dataset as a zip file. We need to rerun these commands everytime we reconnect our Colab instance, but it can greatly speed up training and data management.
+
+3. Installing Python packages
+
+```git
+!pip3 install package-name
 ```
 
-Reference a figure by its code chunk label with the `fig:` prefix, e.g., see Figure \@ref(fig:nice-fig). Similarly, you can reference tables generated from `knitr::kable()`, e.g., see Table \@ref(tab:nice-tab).
+Straightforward and most packages should be installed out-of-the-box. You can run other system commands by starting with the *!* (exclamation mark) too. 
 
-```{r nice-tab, tidy=FALSE}
-knitr::kable(
-  head(iris, 20), caption = 'Here is a nice table!',
-  booktabs = TRUE
-)
+## Visual Studio (VS) Code (Local Option)
+
+1. Extensions
+
+If you have a really powerful machine, or if you just prefer running your files locally, I'd recommend using VS Code. Not only is it open-source, but it also has poweful extensions to emulate notebooks, code completion and a ton of python specific tools. My top recommended extensions are (in no specific order):
+
+* Python for VSCode (for syntax)
+* Visual Studio IntelliCode (for notebooks)
+* Pylance (supercharge python)
+* Code Runner (easily run code snippets)
+
+2. Installing Python packages
+
+You will need to have python3 and pip3 installed.
+
+```git
+pip3 install package-name
 ```
 
-You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].

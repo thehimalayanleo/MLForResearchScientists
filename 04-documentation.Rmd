@@ -1,0 +1,43 @@
+# Documentation {#doc}
+
+Maintaning documentation is hard. The easiest way to get to automated documentation *(not recommended, have a look at [How I Judge Documentation Quality?](https://www.ericholscher.com/blog/2014/feb/27/how-i-judge-documentation-quality/))* is using pdoc. Let's get started with installation and maintenance.
+
+Install pdoc for python-3 using the following command
+```{git pdoc, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+pip3 install pdoc3
+```
+To automate documentation creation we need to add comments using the [Google docstrings'](https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings) format. Let us look at a quick example for a function used to add two numbers (stored in the file *Test_Example.py*)
+
+```{python add2, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+def add_binary(a, b):
+    '''
+    Returns the sum of two decimal numbers in binary digits.
+
+            Parameters:
+                    a (int): A decimal integer
+                    b (int): Another decimal integer
+
+            Returns:
+                    binary_sum (str): Binary string of the sum of a and b
+    '''
+    binary_sum = bin(a+b)[2:]
+    return binary_sum
+```
+
+Now, to output the documentation in *html* files, we will use the following command.
+```{git cmd2, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+pdoc --html Test_Example.py --output-dir docs
+```
+
+Here, the *Test_Example.py* is the source code. The *output-dir* parameter provides the location to store the *html* files for the wiki. The documentation looks like the following. However, this command will not work for a *.ipynb* file. The best way to create documentation will be to download the *.py file* from Colab and then use the *pdoc* command. Another way to convert a notebook to a python file is to use the *[nbconvert](https://nbconvert.readthedocs.io/en/latest/install.html#installing-nbconvert)* command.
+```{git cmd3, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+ipython nbconvert --to python notebook.ipynb
+```
+
+Furthermore, to create documentation for the entire python source code folder, we can use the following *pdoc* commmand.
+
+Now, to output the documentation in *html* files, we will use the following command.
+```{git cmd4, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+pdoc --html src-folder --output-dir docs
+```
+Here, *src-folder* is the folder holding Python source-code. 

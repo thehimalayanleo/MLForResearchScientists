@@ -1,24 +1,11 @@
 # Putting It All Together {#putting-it-all-together} 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
-## R Markdown
+## Workflow
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+![How to start with ML Projects!](./images/WorkFlow-ML.png "ML Workflow")
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+An overview of the entire workflow to good collaboration on ML projects.
 
-```{r cars}
-summary(cars)
-```
+## Concluding Remarks
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Getting started with Colab and VS Code is super easy. However, to avoid hassles for long-term projects & collaborations it is best to establish sane practices early on. Hopefully, following this guide and the many references on here give you the neccessary peace of mind. Code on!

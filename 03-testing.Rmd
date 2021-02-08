@@ -1,0 +1,29 @@
+# Unit Testing {#testing}
+
+The simplest way to create unit tests in python are using the module *unittest*. Let us look at a simple example (from [GeeksforGeeks](https://www.geeksforgeeks.org/unit-testing-python-unittest/))
+
+```python
+# Python code to demonstrate working of unittest 
+import unittest 
+  
+class TestStringMethods(unittest.TestCase): 
+
+    # Returns True if the string contains 4 a. 
+    def test_strings_a(self): 
+        self.assertEqual( 'a'*4, 'aaaa') 
+  
+    # Returns True if the string is in upper case. 
+    def test_upper(self):         
+        self.assertEqual('foo'.upper(), 'FOO') 
+        
+# Run all unit tests
+if __name__ == '__main__': 
+    unittest.main() 
+```
+ The above example is pretty self-explanatory. It tests two simple functions- multiplying a string by 4 times and converting a string to uppercase. These tests are super useful for deterministic functions. However, creating such tests for gradient descent might not be easy. However, if we know the possible bounds on the function's output we can create functions to test them. A simple ML testing library is indeed available for [tensorflow (deprecated in TF2.0)](https://medium.com/@keeper6928/mltest-automatically-test-neural-network-models-in-one-function-call-eb6f1fa5019d) and [pytorch](https://github.com/suriyadeepan/torchtest). unittest could well be used to define something similar as demonstrated in [pytorch code review](https://codereview.stackexchange.com/questions/227423/pytorch-unit-testing-in-python).
+ 
+These libraries check for the following items:
+* Whether variables change
+* If certain variables are fixed, do they remain fixed over iterations
+* Is the output value reasonable (i.e. under certain bounds)?
+* Is the model well connected (i.e. do all inputs contriibute to the training operation)?

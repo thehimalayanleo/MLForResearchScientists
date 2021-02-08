@@ -1,0 +1,55 @@
+# Benchmarking
+
+ML Systems get super complex very easily. You've to track projects, experiments within these projects, metrics inside each experiment, hyperparameters for each metric collection, and so much more. Furthermore, multiple experiment runs slow the experimentation phase and makes it harder to track the results. Recently, the ML systems got an excellent upgrade. Now, users could pipe out all the *super interesting stuff* onto a cool looking dashboard. Enter *[Weights and Biases](wandb.ai)*. You not only get a free account as an academic, but you can also invite a team to collaborate! Especially if you work on research and/or in open-source. Weights and Biases (WANDB) exists to give you control of your data, store multiple experimentation runs and compare your results easily!
+
+Let us look at the simplest way to get WANDB running on your project. You can find a similar code setup once you create your project on <wandb.ai>.
+
+1. Init
+
+```git
+pip install --upgrade wandb
+wandb login your-login-code
+```
+
+2. Sample Training Loop to log metrics
+```python
+# Init wandb
+import wandb
+
+# List of hyperparameters
+config = dict (
+  learning_rate = 0.01,
+  momentum = 0.2,
+  architecture = "CNN",
+  dataset_id = "peds-0192",
+  infra = "AWS",
+)
+
+# Initialize the project with the hyperparameters and other 
+# organization stuff
+wandb.init(project="project-name",
+  notes="your-notes",
+  tags=["baselie", "tag1"],
+  config=config,
+  entity='teamname'
+)
+
+# Save your dataset to track which dataset was used in the current
+# expt
+artifact = wandb.Artifact('my-dataset', type='dataset')
+artifact.add_file('my-dataset.txt')
+
+# Log metrics (here accuracy) with wandb
+wandb.watch(model)
+
+# Here, we assume that the my-dataset.txt has been used to create a
+# train_loader
+
+model.train()
+for batch_idx, (data, target) in enumerate(train_loader)
+    if batch_idx % args.log_interval == 0:
+        wandb.log({"Test Accuracy": correct / total, "Test Loss": loss})
+
+# Save model to wandb
+torch.save(model.state_dict(), os.path.join(wandb.run.dir, 'model.pt'))
+```
