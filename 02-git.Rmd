@@ -13,7 +13,7 @@ Here are some standard methods for easy and error-free collaboration (for local 
 
 First fork the upstream repository. Next access your remote fork's url and clone it and set this remote url as the origin to push changes to. Finally, set the original repository (the one you cloned from) as your upstream.
 
-```{git localrepo1, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+```{localrepo1, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
 # clone parent repo
 git clone your-remote-fork-url
 

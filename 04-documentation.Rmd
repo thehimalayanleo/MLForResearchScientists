@@ -8,7 +8,7 @@ pip3 install pdoc3
 ```
 To automate documentation creation we need to add comments using the [Google docstrings'](https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings) format. Let us look at a quick example for a function used to add two numbers (stored in the file *Test_Example.py*)
 
-```{python add2, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center'}
+```python
 def add_binary(a, b):
     '''
     Returns the sum of two decimal numbers in binary digits.
