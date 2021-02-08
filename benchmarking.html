@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 7 Putting It All Together | ML Workflow for Research Scientists</title>
+  <title>Chapter 6 Benchmarking | ML Workflow for Research Scientists</title>
   <meta name="description" content="This is a tutorial for Google Colab users to contribute code to a well-structured Python project." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 7 Putting It All Together | ML Workflow for Research Scientists" />
+  <meta property="og:title" content="Chapter 6 Benchmarking | ML Workflow for Research Scientists" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 7 Putting It All Together | ML Workflow for Research Scientists" />
+  <meta name="twitter:title" content="Chapter 6 Benchmarking | ML Workflow for Research Scientists" />
   
   <meta name="twitter:description" content="This is a tutorial for Google Colab users to contribute code to a well-structured Python project." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="benchmarking.html"/>
-<link rel="next" href="references.html"/>
+<link rel="prev" href="doc.html"/>
+<link rel="next" href="putting-it-all-together.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -179,29 +179,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="putting-it-all-together" class="section level1">
-<h1><span class="header-section-number">Chapter 7</span> Putting It All Together</h1>
-<div id="workflow" class="section level2">
-<h2><span class="header-section-number">7.1</span> Workflow</h2>
-<div class="figure">
-<img src="images/WorkFlow-ML.png" title="ML Workflow" alt="" />
-<p class="caption">How to start with ML Projects!</p>
-</div>
-<p>An overview of the entire workflow to good collaboration on ML projects.</p>
-</div>
-<div id="concluding-remarks" class="section level2">
-<h2><span class="header-section-number">7.2</span> Concluding Remarks</h2>
-<p>Getting started with Colab and VS Code is super easy. However, to avoid hassles for long-term projects &amp; collaborations it is best to establish sane practices early on. Hopefully, following this guide and the many references on here give you the neccessary peace of mind. Code on!</p>
+<div id="benchmarking" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Benchmarking</h1>
+<p>ML Systems get super complex very easily. You’ve to track projects, experiments within these projects, metrics inside each experiment, hyperparameters for each metric collection, and so much more. Furthermore, multiple experiment runs slow the experimentation phase and makes it harder to track the results. Recently, the ML systems got an excellent upgrade. Now, users could pipe out all the <em>super interesting stuff</em> onto a cool looking dashboard. Enter <em><a href="wandb.ai">Weights and Biases</a></em>. You not only get a free account as an academic, but you can also invite a team to collaborate! Especially if you work on research and/or in open-source. Weights and Biases (WANDB) exists to give you control of your data, store multiple experimentation runs and compare your results easily!</p>
+<p>Let us look at the simplest way to get WANDB running on your project. You can find a similar code setup once you create your project on &lt;wandb.ai&gt;.</p>
+<ol style="list-style-type: decimal">
+<li>Init</li>
+</ol>
+<pre class="git"><code>pip install --upgrade wandb
+wandb login your-login-code</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Sample Training Loop to log metrics</li>
+</ol>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="benchmarking.html#cb16-1"></a><span class="co"># Init wandb</span></span>
+<span id="cb16-2"><a href="benchmarking.html#cb16-2"></a><span class="im">import</span> wandb</span>
+<span id="cb16-3"><a href="benchmarking.html#cb16-3"></a></span>
+<span id="cb16-4"><a href="benchmarking.html#cb16-4"></a><span class="co"># List of hyperparameters</span></span>
+<span id="cb16-5"><a href="benchmarking.html#cb16-5"></a>config <span class="op">=</span> <span class="bu">dict</span> (</span>
+<span id="cb16-6"><a href="benchmarking.html#cb16-6"></a>  learning_rate <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span id="cb16-7"><a href="benchmarking.html#cb16-7"></a>  momentum <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span id="cb16-8"><a href="benchmarking.html#cb16-8"></a>  architecture <span class="op">=</span> <span class="st">&quot;CNN&quot;</span>,</span>
+<span id="cb16-9"><a href="benchmarking.html#cb16-9"></a>  dataset_id <span class="op">=</span> <span class="st">&quot;peds-0192&quot;</span>,</span>
+<span id="cb16-10"><a href="benchmarking.html#cb16-10"></a>  infra <span class="op">=</span> <span class="st">&quot;AWS&quot;</span>,</span>
+<span id="cb16-11"><a href="benchmarking.html#cb16-11"></a>)</span>
+<span id="cb16-12"><a href="benchmarking.html#cb16-12"></a></span>
+<span id="cb16-13"><a href="benchmarking.html#cb16-13"></a><span class="co"># Initialize the project with the hyperparameters and other </span></span>
+<span id="cb16-14"><a href="benchmarking.html#cb16-14"></a><span class="co"># organization stuff</span></span>
+<span id="cb16-15"><a href="benchmarking.html#cb16-15"></a>wandb.init(project<span class="op">=</span><span class="st">&quot;project-name&quot;</span>,</span>
+<span id="cb16-16"><a href="benchmarking.html#cb16-16"></a>  notes<span class="op">=</span><span class="st">&quot;your-notes&quot;</span>,</span>
+<span id="cb16-17"><a href="benchmarking.html#cb16-17"></a>  tags<span class="op">=</span>[<span class="st">&quot;baselie&quot;</span>, <span class="st">&quot;tag1&quot;</span>],</span>
+<span id="cb16-18"><a href="benchmarking.html#cb16-18"></a>  config<span class="op">=</span>config,</span>
+<span id="cb16-19"><a href="benchmarking.html#cb16-19"></a>  entity<span class="op">=</span><span class="st">&#39;teamname&#39;</span></span>
+<span id="cb16-20"><a href="benchmarking.html#cb16-20"></a>)</span>
+<span id="cb16-21"><a href="benchmarking.html#cb16-21"></a></span>
+<span id="cb16-22"><a href="benchmarking.html#cb16-22"></a><span class="co"># Save your dataset to track which dataset was used in the current</span></span>
+<span id="cb16-23"><a href="benchmarking.html#cb16-23"></a><span class="co"># expt</span></span>
+<span id="cb16-24"><a href="benchmarking.html#cb16-24"></a>artifact <span class="op">=</span> wandb.Artifact(<span class="st">&#39;my-dataset&#39;</span>, <span class="bu">type</span><span class="op">=</span><span class="st">&#39;dataset&#39;</span>)</span>
+<span id="cb16-25"><a href="benchmarking.html#cb16-25"></a>artifact.add_file(<span class="st">&#39;my-dataset.txt&#39;</span>)</span>
+<span id="cb16-26"><a href="benchmarking.html#cb16-26"></a></span>
+<span id="cb16-27"><a href="benchmarking.html#cb16-27"></a><span class="co"># Log metrics (here accuracy) with wandb</span></span>
+<span id="cb16-28"><a href="benchmarking.html#cb16-28"></a>wandb.watch(model)</span>
+<span id="cb16-29"><a href="benchmarking.html#cb16-29"></a></span>
+<span id="cb16-30"><a href="benchmarking.html#cb16-30"></a><span class="co"># Here, we assume that the my-dataset.txt has been used to create a</span></span>
+<span id="cb16-31"><a href="benchmarking.html#cb16-31"></a><span class="co"># train_loader</span></span>
+<span id="cb16-32"><a href="benchmarking.html#cb16-32"></a></span>
+<span id="cb16-33"><a href="benchmarking.html#cb16-33"></a>model.train()</span>
+<span id="cb16-34"><a href="benchmarking.html#cb16-34"></a><span class="cf">for</span> batch_idx, (data, target) <span class="kw">in</span> <span class="bu">enumerate</span>(train_loader)</span>
+<span id="cb16-35"><a href="benchmarking.html#cb16-35"></a>    <span class="cf">if</span> batch_idx <span class="op">%</span> args.log_interval <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb16-36"><a href="benchmarking.html#cb16-36"></a>        wandb.log({<span class="st">&quot;Test Accuracy&quot;</span>: correct <span class="op">/</span> total, <span class="st">&quot;Test Loss&quot;</span>: loss})</span>
+<span id="cb16-37"><a href="benchmarking.html#cb16-37"></a></span>
+<span id="cb16-38"><a href="benchmarking.html#cb16-38"></a><span class="co"># Save model to wandb</span></span>
+<span id="cb16-39"><a href="benchmarking.html#cb16-39"></a>torch.save(model.state_dict(), os.path.join(wandb.run.<span class="bu">dir</span>, <span class="st">&#39;model.pt&#39;</span>))</span></code></pre></div>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="benchmarking.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="doc.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="putting-it-all-together.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -232,7 +269,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/06-putting-it-all-together.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/05-Benchmarking.Rmd",
 "text": "Edit"
 },
 "history": {
